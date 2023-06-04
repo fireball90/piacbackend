@@ -1,0 +1,76 @@
+        [HttpGet]
+        [Route("GetIskola")]
+        public IActionResult GetIskola()
+        {
+            using (var context = new iskolaContext())
+            {
+                try
+                {
+                    var iskolak = new List<Iskolak>(context.Iskolaks);
+                    return Ok(iskolak);
+                }
+                catch (Exception ex)
+                {
+                    return StatusCode(400, ex.Message);
+                }
+            }
+        }
+
+        [HttpGet]
+        [Route("GetBitches")]
+
+        public IActionResult GetBitches()
+        {
+            using (var context = new iskolaContext())
+            {
+                try
+                {
+                    var bitches = new List<Iskolak>(context.Iskolaks);
+                    return Ok(bitches);
+                }
+                catch (Exception ex)
+                {
+                    return StatusCode(400, ex.Message);
+                }
+            }
+        }
+
+        [HttpPost]
+        [Route("PostTanulo")]
+        public IActionResult PostTanulo(Diakok diak)
+        {
+            using (var context = new iskolaContext())
+            {
+                try
+                {
+                    context.Diakoks.Add(diak);
+                    context.SaveChanges();
+                    return Ok("A tanuló hozzáadása sikeresen megtörtént.");
+                }
+                catch (Exception ex)
+                {
+                    return StatusCode(400, ex.Message);
+                }
+            }
+        }
+
+        [HttpDelete]
+        [Route("DeleteLog")]
+        public IActionResult DeleteLog(int id)
+        {
+            using (var context = new iskolaContext())
+            {
+                try
+                {
+                    Iskolalogok log = new Iskolalogok();
+                    log.Id = id;
+                    context.Iskolalogoks.Remove(log);
+                    context.SaveChanges();
+                    return Ok("A log adatainak a törlése sikeresen megtörtént.");
+                }
+                catch (Exception ex)
+                {
+                    return StatusCode(400, ex.Message);
+                }
+            }
+        }
