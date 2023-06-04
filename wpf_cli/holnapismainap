@@ -1,0 +1,54 @@
+List<Tanulok> tanuloLista = new List<Tanulok>();
+        public MainWindow()
+        {
+            InitializeComponent();
+
+            StreamReader reader = new StreamReader("nevek.txt");
+
+            while (!reader.EndOfStream)
+            {
+                tanuloLista.Add(new Tanulok(reader.ReadLine()));
+            }
+            reader.Close();
+
+            foreach (var item in tanuloLista)
+            {
+                tanulok.Items.Add(item.Ev+";"+item.Osztaly+";"+item.Nev);
+            }
+
+        }
+
+        private void delBtn_Click(object sender, RoutedEventArgs e)
+        {
+
+            if (tanulok.SelectedIndex == -1)
+            {
+                MessageBox.Show("Nem jelölt ki tanulót!");
+            }
+            else
+            {
+                tanulok.Items.RemoveAt(tanulok.Items.IndexOf(tanulok.SelectedItem));
+            }
+        }
+
+        private void saveBtn_Click(object sender, RoutedEventArgs e)
+        {
+            StreamWriter writer = new StreamWriter("nevekNEW.txt");
+
+            try
+            {
+                foreach (var item in tanulok.Items)
+                {
+                    writer.WriteLine(item);
+                }
+                writer.Close();
+
+                MessageBox.Show("Sikeres mentés!");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+
+        }
