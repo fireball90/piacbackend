@@ -53,7 +53,25 @@
                 }
             }
         }
-
+        
+        [HttpPut]
+        [Route("UpdateDiak")]
+        public IActionResult Put(Diakok diak)
+        {
+            using (var context = new iskolaContext())
+            {
+                try
+                {
+                    context.Diakoks.Update(diak);
+                    context.SaveChanges();
+                    return Ok($"A tanuló módosítása sikeresen megtörtént."); ;
+                }
+                catch (Exception ex)
+                {
+                    return StatusCode(400, ex.Message);
+                }
+            }
+        }
         [HttpDelete]
         [Route("DeleteLog")]
         public IActionResult DeleteLog(int id)
